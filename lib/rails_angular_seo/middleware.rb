@@ -18,8 +18,10 @@ module RailsAngularSeo
 
     def call(env)
       if will_render?(env)
-        self.class.server_name ||= env["HTTP_X_FORWARDED_HOST"]
-        RailsAngularSeo::Renderer.render(env, self.class.seo_id, self.class.server_name)
+        self.class.server_name ||= env["HTTP_HOST"]
+        path = URI("#{env["rack.url_scheme"]}://#{self.class.server_name}#{env["REQUEST_PATH"]}")
+        path_without_port = "#{env["rack.url_scheme"]}://#{path.host}#{env["REQUEST_PATH"]}"
+        RailsAngularSeo::Renderer.render(env, self.class.seo_id, path_without_port)
       else
         @app.call(env)
       end
