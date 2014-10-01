@@ -1,5 +1,3 @@
-require 'phantomjs'
-
 module RailsAngularSeo
   class Renderer
 
