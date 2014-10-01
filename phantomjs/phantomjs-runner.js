@@ -7,6 +7,10 @@ if(url.length > 0) {
     width: 1280,
     height: 960
   };
+  page.onResourceError = function(resourceError) {
+    page.reason = resourceError.errorString;
+    page.reason_url = resourceError.url;
+  };
   page.open(url, function (status) {
     if (status == 'success') {
       var delay, checker = (function() {
@@ -28,6 +32,10 @@ if(url.length > 0) {
         }
       });
       delay = setInterval(checker, 100);
+    }
+    else {
+      console.log("Error opening url \"" + page.reason_url + "\": " + page.reason);
+      phantom.exit(1);
     }
   });
 }

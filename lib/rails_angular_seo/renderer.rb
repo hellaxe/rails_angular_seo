@@ -5,7 +5,7 @@ module RailsAngularSeo
 
     def self.render(env, seo_id, path_without_port)
       output = ""
-      Phantomjs.run(File.expand_path("../../../phantomjs/phantomjs-runner.js", __FILE__), path_without_port, seo_id) {|line| output += line}
+      output = IO.popen(["phantomjs", "--ssl-protocol=any", File.expand_path("../../../phantomjs/phantomjs-runner.js", __FILE__), path_without_port, seo_id]){|phantom_output| output = phantom_output.read}
       [200, { "Content-Type" => "text/html" }, [output]]
     end
   end
