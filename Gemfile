@@ -1,7 +1,5 @@
 source "http://rubygems.org"
 
-gem "phantomjs"
-
 group :development do
   gem "rspec"
   gem "shoulda", ">= 0"
