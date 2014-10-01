@@ -14,13 +14,13 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "render_static"
-  gem.homepage = "http://github.com/herval/render_static"
+  gem.name = "rails_angular_seo"
+  gem.homepage = "http://github.com/arunn/rails_angular_seo"
   gem.license = "MIT"
-  gem.summary = %Q{ render_static allows you to make your single-page apps (Backbone, Angular, etc) built on Rails SEO-friendly. }
-  gem.description = %Q{ render_static allows you to make your single-page apps (Backbone, Angular, etc) built on Rails SEO-friendly. It works by injecting a small rack middleware that will render pages as plain html, when the requester is one of the most common crawlers/bots out there (Google, Yahoo Baidu and Bing) }
-  gem.email = "hervalfreire@gmail.com"
-  gem.authors = ["herval"]
+  gem.summary = %Q{ rails_angular_seo allows you to make your single-page apps (Backbone, Angular, etc) built on Rails SEO-friendly. }
+  gem.description = %Q{ rails_angular_seo allows you to make your single-page apps (Backbone, Angular, etc) built on Rails SEO-friendly. It works by injecting a small rack middleware that will render pages as plain html, when the requester is one of the most common crawlers/bots out there (Google, Yahoo Baidu and Bing }
+  gem.email = "arunkumar@chronus.com"
+  gem.authors = ["herval", "arunn"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -37,7 +37,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "render_static #{version}"
+  rdoc.title = "rails_angular_seo #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
