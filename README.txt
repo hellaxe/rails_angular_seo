@@ -4,14 +4,20 @@
 
 == DESCRIPTION:
 
+rails_angular_seo assumes that phantomjs is installed. Please install it if not installed already.
+
 rails_angular_seo allows you to make your single-page apps (Backbone, Angular, etc) built on Rails SEO-friendly. It works by injecting a small rack middleware that will render pages as plain html, when the requester has one of the following user-agent headers:
 
-Googlebot
-Googlebot-Mobile
-AdsBot-Google
-Mozilla/5.0 (compatible; Ask Jeeves/Teoma; +http://about.ask.com/en/docs/about/webmasters.shtml)
-Baiduspider
-Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+          "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+          "Googlebot/2.1 (+http://www.google.com/bot.html)",
+          "compatible; Mediapartners-Google/2.1; +http://www.google.com/bot.html",
+          "AdsBot-Google (+http://www.google.com/adsbot.html)",
+          "Mediapartners-Google",
+          "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+          "Mozilla/5.0 (compatible; bingbot/2.0 +http://www.bing.com/bingbot.htm)",
+          "Baiduspider+(+http://www.baidu.com/search/spider_jp.html)",
+          "Baiduspider+(+http://www.baidu.com/search/spider.htm)",
+          "BaiDuSpider"
 
 Please note that, in order for this to work, you need more than one thread/process of your webserver running, as the middleware will effectively make a second call back to your own app and render the content, streaming it back to the requester (crawler/bot).
 
@@ -35,6 +41,7 @@ In order to serve a set of routes as a single-page app, your routes.rb usually c
     RailsAngularSeo::Middleware.base_path = "/" # replace / for whichever path matches your app's index.html
     RailsAngularSeo::Middleware.seo_id    = "seo_id" # replace seo_id with whatever ID is used for the HTML DOM element which would be updated with status as "ready" once the ajax load is completed.
     RailsAngularSeo::Middleware.server_name    = "NAME OF YOUR SERVER"
+    RailsAngularSeo::Middleware.phantomjs_path = "/usr/local/bin/phantomjs" # If phantomjs is not in the default PATH.
 
 And you're done! The middleware will only try to static-render requests made by bots AND that would render application/html content.
 

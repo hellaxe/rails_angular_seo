@@ -13,15 +13,17 @@ if(url.length > 0) {
   };
   page.open(url, function (status) {
     if (status == 'success') {
+      var try_count = 0;
       var delay, checker = (function() {
         var status_element_id = system.args[2] || '';
+        try_count += 1;
         var html = page.evaluate(function (status_element_id) {
           var body;
           if(status_element_id == "")
           {  body = document.getElementsByTagName('body')[0];}
           else
           {  body = document.getElementById(status_element_id);}
-          if(body.getAttribute('data-status') == 'ready') {
+          if(body == null || body.getAttribute('data-status') == null || body.getAttribute('data-status') == 'ready') {
             return document.getElementsByTagName('html')[0].outerHTML;
           }
         }, status_element_id);
@@ -29,6 +31,9 @@ if(url.length > 0) {
           clearTimeout(delay);
           console.log(html);
           phantom.exit();
+        }
+        else if(try_count > 50){
+          phantom.exit(1);
         }
       });
       delay = setInterval(checker, 100);
