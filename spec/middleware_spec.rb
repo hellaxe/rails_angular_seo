@@ -1,8 +1,8 @@
-require "render_static/middleware"
+require "rails_angular_seo/middleware"
 
-describe RenderStatic::Middleware do
+describe RailsAngularSeo::Middleware do
   let(:app) { stub }
-  let(:middleware) { RenderStatic::Middleware.new(app) }
+  let(:middleware) { RailsAngularSeo::Middleware.new(app) }
   let(:request) {
     {
         "PATH_INFO" => "/somewhere/",
@@ -11,7 +11,7 @@ describe RenderStatic::Middleware do
   }
 
   before do
-    RenderStatic::Middleware.base_path = "/somewhere/"
+    RailsAngularSeo::Middleware.base_path = "/somewhere/"
   end
 
   describe "a non-bot user agent" do
@@ -19,7 +19,7 @@ describe RenderStatic::Middleware do
       env = request.merge("HTTP_USER_AGENT" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31")
 
       app.should_receive(:call).with(env)
-      RenderStatic::Renderer.should_not_receive(:render)
+      RailsAngularSeo::Renderer.should_not_receive(:render)
 
       middleware.call(env)
     end
@@ -30,7 +30,7 @@ describe RenderStatic::Middleware do
       env = request.merge("HTTP_USER_AGENT" => "Googlebot", "PATH_INFO" => "/somewhere_else/a.html")
 
       app.should_receive(:call).with(env)
-      RenderStatic::Renderer.should_not_receive(:render)
+      RailsAngularSeo::Renderer.should_not_receive(:render)
       middleware.call(env)
     end
 
@@ -38,7 +38,7 @@ describe RenderStatic::Middleware do
       env = request.merge("HTTP_USER_AGENT" => "Googlebot", "PATH_INFO" => "/somewhere/index.html")
 
       app.should_not_receive(:call)
-      RenderStatic::Renderer.should_receive(:render).with(env)
+      RailsAngularSeo::Renderer.should_receive(:render).with(env)
       middleware.call(env)
     end
 
@@ -46,7 +46,7 @@ describe RenderStatic::Middleware do
       env = request.merge("HTTP_USER_AGENT" => "Googlebot", "PATH_INFO" => "/somewhere/index")
 
       app.should_not_receive(:call)
-      RenderStatic::Renderer.should_receive(:render).with(env)
+      RailsAngularSeo::Renderer.should_receive(:render).with(env)
       middleware.call(env)
     end
 
@@ -54,7 +54,7 @@ describe RenderStatic::Middleware do
       env = request.merge("REQUEST_METHOD" => "POST", "PATH_INFO" => "/somewhere/index")
 
       app.should_receive(:call)
-      RenderStatic::Renderer.should_not_receive(:render)
+      RailsAngularSeo::Renderer.should_not_receive(:render)
       middleware.call(env)
     end
 
@@ -62,7 +62,7 @@ describe RenderStatic::Middleware do
       env = request.merge("HTTP_USER_AGENT" => "Googlebot", "PATH_INFO" => "/somewhere/a.js")
 
       app.should_receive(:call).with(env)
-      RenderStatic::Renderer.should_not_receive(:render)
+      RailsAngularSeo::Renderer.should_not_receive(:render)
       middleware.call(env)
     end
   end

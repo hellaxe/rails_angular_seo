@@ -1,4 +1,4 @@
-require "RailsAngularSeo/renderer"
+require "rails_angular_seo/renderer"
 
 describe RailsAngularSeo::Renderer do
 
