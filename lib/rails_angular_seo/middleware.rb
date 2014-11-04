@@ -11,6 +11,7 @@ module RailsAngularSeo
       attr_accessor :seo_id
       attr_accessor :server_name
       attr_accessor :phantomjs_path
+      attr_accessor :phantomjs_options
     end
 
     def initialize(app)
@@ -21,9 +22,10 @@ module RailsAngularSeo
       if will_render?(env)
         self.class.server_name ||= env["HTTP_HOST"]
         self.class.phantomjs_path ||= 'phantomjs'
+        self.class.phantomjs_options ||= ["--ssl-protocol=any"]
         path = URI("#{env["rack.url_scheme"]}://#{self.class.server_name}#{env["REQUEST_URI"]}")
         path_without_port = "#{env["rack.url_scheme"]}://#{path.host}#{env["REQUEST_URI"]}"
-        RailsAngularSeo::Renderer.render(self.class.phantomjs_path, self.class.seo_id, path_without_port)
+        RailsAngularSeo::Renderer.render(self.class.phantomjs_path, self.class.seo_id, path_without_port, {phantomjs_options: self.class.phantomjs_options})
       else
         @app.call(env)
       end
