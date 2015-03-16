@@ -48,7 +48,11 @@ module RailsAngularSeo
           "Mozilla/5.0 (compatible; bingbot/2.0 +http://www.bing.com/bingbot.htm)",
           "Baiduspider+(+http://www.baidu.com/search/spider_jp.html)",
           "Baiduspider+(+http://www.baidu.com/search/spider.htm)",
-          "BaiDuSpider"
+          "BaiDuSpider",
+          "facebookexternalhit",
+          "twitterbot",
+          "slackbot",
+          "vkShare"
       ].include?(env["HTTP_USER_AGENT"])
     end
 
